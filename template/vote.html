@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cast Your Vote</title>
+  <link href="static/styles.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Vote</h1>
+  <form action="https://YOUR-RENDER-BACKEND-URL/vote" method="POST">
+    <label>Voter ID:</label>
+    <input type="text" name="voter_id" required><br>
+    <label>Select Candidate:</label>
+    <input type="text" name="candidate" required><br>
+    <button type="submit">Submit Vote</button>
+  </form>
+</body>
+</html>
