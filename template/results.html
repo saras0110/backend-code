@@ -11,7 +11,7 @@
 
   <script>
     async function fetchResults() {
-      const res = await fetch("https://YOUR-RENDER-BACKEND-URL/results");
+      const res = await fetch("https://backend-code-qta6.onrender.com/results");
       const data = await res.json();
       const ctx = document.getElementById('resultsChart').getContext('2d');
       const labels = Object.keys(data);
