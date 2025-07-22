@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link href="static/styles.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+
+  <h2>Election Countdown</h2>
+  <div id="countdown"></div>
+
+  <button onclick="downloadPDF()">Download Report PDF</button>
+
+  <h2>Candidates</h2>
+  <ul id="candidateList"></ul>
+
+  <h2>Voters</h2>
+  <ul id="voterList"></ul>
+
+  <script src="static/countdown.js"></script>
+  <script>
+    const backendURL = "https://YOUR-RENDER-BACKEND-URL";
+
+    async function loadData() {
+      try {
+        // Load candidates
+        const candidates = await fetch(backendURL + "/candidates.json").then(r => r.json());
+        const cList = document.getElementById("candidateList");
+        candidates.candidates.forEach(c => {
+          const li = document.createElement("li");
+          li.textContent = `${c.name} - ${c.flag_url}`;
+          cList.appendChild(li);
+        });
+
+        // Load voters
+        const users = await fetch(backendURL + "/users.json").then(r => r.json());
+        const vList = document.getElementById("voterList");
+        users.voters.forEach(v => {
+          const li = document.createElement("li");
+          li.textContent = `${v.voter_id} - Voted: ${v.voted}`;
+          vList.appendChild(li);
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function downloadPDF() {
+      window.location.href = backendURL + "/download_data";
+    }
+
+    loadData();
+  </script>
+</body>
+</html>
