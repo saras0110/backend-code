@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Live Election Results</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Live Election Results</h1>
+  </header>
+
+  <main class="results-container">
+    <div class="results-graphic">
+      {% for candidate in candidates %}
+      <div class="result-card">
+        <img src="{{ candidate.party_logo_url }}" alt="Party Logo" class="party-logo">
+        <h2>{{ candidate.party_name }}</h2>
+        <p><strong>Candidate:</strong> {{ candidate.name }}</p>
+        <div class="vote-bar">
+          <div class="vote-fill" style="width: {{ candidate.vote_percentage }}%"></div>
+        </div>
+        <p><strong>Votes:</strong> {{ candidate.votes }}</p>
+        {% if candidate.is_winner %}
+          <p class="winner-badge">WINNER</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+
+  <footer>
+    <p>Results update live. Refresh for latest.</p>
+    <a href="index.html">Back to Home</a>
+  </footer>
+</body>
+</html>
