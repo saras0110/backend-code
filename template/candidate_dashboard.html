@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Candidate Dashboard</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Candidate Dashboard</h1>
+  </header>
+
+  <main>
+    <div class="profile-card">
+      <h2>Welcome, {{ candidate.name }}</h2>
+      <img src="{{ candidate.party_logo_url }}" alt="Party Logo" class="party-logo">
+      <p><strong>Year of Study:</strong> {{ candidate.year }}</p>
+      <p><strong>Age:</strong> {{ candidate.age }}</p>
+      <p><strong>Gender:</strong> {{ candidate.gender }}</p>
+      <p><strong>Party Name:</strong> {{ candidate.party_name }}</p>
+      <p><strong>Party Moto:</strong> {{ candidate.party_moto }}</p>
+      <p><strong>Votes Received:</strong> {{ candidate.votes }}</p>
+
+      {% if candidate.can_edit %}
+      <form action="https://backend-code-qta6.onrender.com/candidate_edit" method="GET">
+        <button type="submit">Edit Details</button>
+      </form>
+      {% else %}
+      <p class="info-text">Editing disabled: Registration countdown ended.</p>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer>
+    <a href="index.html">Back to Home</a>
+  </footer>
+</body>
+</html>
