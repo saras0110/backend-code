@@ -1,10 +1,1 @@
-[
-  {
-    "id": 1,
-    "party_name": "ABC Party",
-    "party_logo_url": "static/uploads/abc_logo.png",
-    "name": "Candidate Name",
-    "votes": 5,
-    "banned": false
-  }
-]
+[]
