@@ -1,112 +1,184 @@
-from flask import Flask, request, jsonify, send_file
-from flask_cors import CORS
+from flask import Flask, render_template, request, redirect, session, send_file
 import json
-import pdfkit
+import os
+from datetime import datetime
+from fpdf import FPDF
 
 app = Flask(__name__)
-CORS(app)
+app.secret_key = 'secret-key'
 
-# Load Data
-def load_data(file):
-    with open(file) as f:
-        return json.load(f)
+# Load JSON files
+def load_json(file):
+    if os.path.exists(file):
+        with open(file) as f:
+            return json.load(f)
+    return {}
 
-# Save Data
-def save_data(file, data):
+def save_json(file, data):
     with open(file, 'w') as f:
         json.dump(data, f, indent=2)
 
-# Admin Login
-@app.route("/admin_login", methods=["POST"])
-def admin_login():
-    creds = request.form
-    users = load_data("users.json")
-    if creds['username'] == users['admin']['username'] and creds['password'] == users['admin']['password']:
-        return "Admin login successful"
-    return "Invalid admin credentials", 401
+# Load data
+users = load_json('users.json')
+candidates = load_json('candidates.json')
+votes = load_json('votes.json')
+countdowns = load_json('countdowns.json')
+ADMIN = load_json('admin.json')
 
-# Register Candidate
-@app.route("/register_candidate", methods=["POST"])
-def register_candidate():
-    data = request.form
-    candidates = load_data("candidates.json")
-    candidates['candidates'].append({
-        "name": data['name'],
-        "flag_url": data['flag_url']
-    })
-    save_data("candidates.json", candidates)
-    return "Candidate registered"
+# Homepage
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-# Register Voter
-@app.route("/register_voter", methods=["POST"])
-def register_voter():
-    data = request.form
-    users = load_data("users.json")
-    users['voters'].append({
-        "voter_id": data['voter_id'],
-        "password": data['password'],
-        "voted": False
-    })
-    save_data("users.json", users)
-    return "Voter registered"
+# Voter Register/Login
+@app.route('/voter', methods=['GET', 'POST'])
+def voter():
+    if request.method == 'POST':
+        action = request.form['action']
+        if action == 'register':
+            username = request.form['username']
+            password = request.form['password']
+            age = request.form['age']
+            gender = request.form['gender']
+            year = request.form['year']
+            if username in users:
+                return "User already exists!"
+            users[username] = {'password': password, 'age': age, 'gender': gender, 'year': year, 'voted': False}
+            save_json('users.json', users)
+            return "Registered successfully! Now log in."
+        elif action == 'login':
+            username = request.form['username']
+            password = request.form['password']
+            user = users.get(username)
+            if user and user['password'] == password:
+                session['voter'] = username
+                return redirect('/voter_dashboard')
+            return "Invalid credentials!"
+    return render_template('voter_register_login.html')
 
-# Voter Login
-@app.route("/voter_login", methods=["POST"])
-def voter_login():
-    data = request.form
-    users = load_data("users.json")
-    for voter in users['voters']:
-        if voter['voter_id'] == data['voter_id'] and voter['password'] == data['password']:
-            if voter['voted']:
-                return "Already voted", 403
-            return "Login successful"
-    return "Invalid credentials", 401
+# Voter Dashboard
+@app.route('/voter_dashboard')
+def voter_dashboard():
+    if 'voter' not in session:
+        return redirect('/voter')
+    voter = session['voter']
+    user = users[voter]
+    voted = user['voted']
+    return render_template('voter_dashboard.html', candidates=candidates, voted=voted)
 
 # Vote
-@app.route("/vote", methods=["POST"])
-def vote():
-    data = request.form
-    users = load_data("users.json")
-    votes = load_data("votes.json")
+@app.route('/vote/<candidate>')
+def vote(candidate):
+    if 'voter' not in session:
+        return redirect('/voter')
+    voter = session['voter']
+    if users[voter]['voted']:
+        return "Already voted!"
+    # Check voting deadline
+    if countdowns['voting_end']:
+        voting_deadline = datetime.fromisoformat(countdowns['voting_end'])
+        if datetime.now() > voting_deadline:
+            return "Voting period ended!"
+    votes.setdefault(candidate, 0)
+    votes[candidate] += 1
+    users[voter]['voted'] = True
+    save_json('votes.json', votes)
+    save_json('users.json', users)
+    return "Vote cast successfully!"
 
-    # Mark voter as voted
-    for voter in users['voters']:
-        if voter['voter_id'] == data['voter_id']:
-            if voter['voted']:
-                return "Already voted", 403
-            voter['voted'] = True
-            break
+# Candidate Register/Login
+@app.route('/candidate', methods=['GET', 'POST'])
+def candidate():
+    if request.method == 'POST':
+        action = request.form['action']
+        if action == 'register':
+            username = request.form['username']
+            password = request.form['password']
+            name = request.form['name']
+            year = request.form['year']
+            age = request.form['age']
+            gender = request.form['gender']
+            party = request.form['party']
+            motto = request.form['motto']
+            if username in candidates:
+                return "Candidate exists!"
+            candidates[username] = {
+                'password': password, 'name': name, 'year': year,
+                'age': age, 'gender': gender, 'party': party, 'motto': motto
+            }
+            save_json('candidates.json', candidates)
+            return "Registered successfully! Now log in."
+        elif action == 'login':
+            username = request.form['username']
+            password = request.form['password']
+            user = candidates.get(username)
+            if user and user['password'] == password:
+                session['candidate'] = username
+                return redirect('/candidate_dashboard')
+            return "Invalid credentials!"
+    return render_template('candidate_register_login.html')
 
-    votes['votes'].append({
-        "voter_id": data['voter_id'],
-        "candidate": data['candidate']
-    })
+# Candidate Dashboard
+@app.route('/candidate_dashboard', methods=['GET', 'POST'])
+def candidate_dashboard():
+    if 'candidate' not in session:
+        return redirect('/candidate')
+    username = session['candidate']
+    candidate = candidates[username]
+    if request.method == 'POST':
+        # Candidate can update details before deadline
+        if countdowns['candidate_reg_end']:
+            reg_deadline = datetime.fromisoformat(countdowns['candidate_reg_end'])
+            if datetime.now() > reg_deadline:
+                return "Registration edit closed!"
+        candidate['motto'] = request.form['motto']
+        candidate['party'] = request.form['party']
+        save_json('candidates.json', candidates)
+        return "Updated!"
+    return render_template('candidate_dashboard.html', candidate=candidate)
 
-    save_data("users.json", users)
-    save_data("votes.json", votes)
+# Admin Login
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == ADMIN['username'] and password == ADMIN['password']:
+            session['admin'] = True
+            return redirect('/admin_dashboard')
+        return "Invalid admin!"
+    return render_template('admin_login.html')
 
-    return "Vote cast"
+# Admin Dashboard
+@app.route('/admin_dashboard', methods=['GET', 'POST'])
+def admin_dashboard():
+    if 'admin' not in session:
+        return redirect('/admin')
+    if request.method == 'POST':
+        candidate_reg_end = request.form['candidate_reg_end']
+        voting_end = request.form['voting_end']
+        countdowns['candidate_reg_end'] = candidate_reg_end
+        countdowns['voting_end'] = voting_end
+        save_json('countdowns.json', countdowns)
+    return render_template('admin_dashboard.html',
+                           candidates=candidates,
+                           votes=votes,
+                           countdowns=countdowns)
 
-# Get Results
-@app.route("/results", methods=["GET"])
-def results():
-    votes = load_data("votes.json")
-    tally = {}
-    for vote in votes['votes']:
-        name = vote['candidate']
-        tally[name] = tally.get(name, 0) + 1
-    return jsonify(tally)
+# Generate PDF
+@app.route('/generate_pdf')
+def generate_pdf():
+    if 'admin' not in session:
+        return redirect('/admin')
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Voting Results", ln=True, align='C')
+    for candidate, count in votes.items():
+        pdf.cell(200, 10, txt=f"{candidate}: {count} votes", ln=True)
+    pdf.output("results.pdf")
+    return send_file("results.pdf", as_attachment=True)
 
-# Download as PDF
-@app.route("/download_data", methods=["GET"])
-def download_data():
-    users = load_data("users.json")
-    candidates = load_data("candidates.json")
-    votes = load_data("votes.json")
-
-    html = f"<h1>Admin Report</h1><h2>Voters</h2>{users}<h2>Candidates</h2>{candidates}<h2>Votes</h2>{votes}"
-    pdfkit.from_string(html, "report.pdf")
-    return send_file("report.pdf", as_attachment=True)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000, debug=True)
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
