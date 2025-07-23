@@ -12,7 +12,7 @@
 
   <main>
     <h2>Countdown Controls</h2>
-    <form action="/set_countdown" method="POST">
+    <form action="https://backend-code-qta6.onrender.com/set_countdown" method="POST">
       <h3>Voter Registration</h3>
       <input type="datetime-local" name="voter_start" required>
       <input type="datetime-local" name="voter_end" required><br>
@@ -41,12 +41,12 @@
         <td>{{ 'Banned' if c['banned'] else 'Active' }}</td>
         <td>
           {% if c['banned'] %}
-          <form action="/unban_candidate" method="POST">
+          <form action="https://backend-code-qta6.onrender.com/unban_candidate" method="POST">
             <input type="hidden" name="candidate_username" value="{{ c['username'] }}">
             <button type="submit">Unban</button>
           </form>
           {% else %}
-          <form action="/ban_candidate" method="POST">
+          <form action="https://backend-code-qta6.onrender.com/ban_candidate" method="POST">
             <input type="hidden" name="candidate_username" value="{{ c['username'] }}">
             <button type="submit">Ban</button>
           </form>
@@ -56,13 +56,13 @@
       {% endfor %}
     </table>
 
-    <form action="/clear_data">
+    <form action="https://backend-code-qta6.onrender.com/clear_data">
       <button type="submit">Clear All Data</button>
     </form>
   </main>
 
   <footer>
-    <a href="/">Home</a>
+    <a href="https://backend-code-qta6.onrender.com/">Home</a>
   </footer>
 </body>
 </html>
