@@ -1,126 +1,64 @@
-/* Import a modern Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 body {
-  font-family: 'Inter', sans-serif;
-  background: #f5f7fa;
-  margin: 0;
-  padding: 0;
-  color: #333;
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  margin: 0; padding: 0;
+  text-align: center;
 }
 
 header {
-  background: linear-gradient(90deg, #0052cc, #00b8d9);
-  color: #fff;
-  padding: 30px 20px;
-  text-align: center;
+  background: #004080;
+  color: white;
+  padding: 20px;
 }
 
-h1 {
-  margin: 0;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-
-h2 {
-  margin-top: 0;
-  color: #0052cc;
+h1, h2, h3 {
+  margin: 10px 0;
 }
 
 main {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 30px;
+  margin: 20px auto;
+  max-width: 800px;
 }
 
-section {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  padding: 30px;
-  transition: transform 0.2s ease;
+.card {
+  background: white;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
 }
 
-section:hover {
-  transform: translateY(-5px);
+form input, form select, form textarea {
+  margin: 5px 0;
+  padding: 8px;
+  width: 80%;
 }
 
-label {
-  display: block;
-  margin: 8px 0 4px;
-  font-weight: 600;
-}
-
-input[type="datetime-local"] {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-bottom: 15px;
-}
-
-button {
-  background: #0052cc;
-  color: #fff;
+button, a {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  background: #004080;
+  color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s ease;
-}
-
-button:hover {
-  background: #0041a8;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
 table {
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
   border-collapse: collapse;
-  margin-top: 20px;
 }
 
-th {
-  background: #0052cc;
-  color: #fff;
-  padding: 12px;
-  text-align: left;
-}
-
-td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-tr:nth-child(even) {
-  background: #f9f9f9;
-}
-
-a {
-  color: #0052cc;
-  text-decoration: none;
-  font-weight: 600;
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 footer {
-  text-align: center;
-  background: #0052cc;
-  color: #fff;
-  padding: 20px;
   margin-top: 40px;
-}
-
-.admin-actions button {
-  background: #00b8d9;
-}
-
-.admin-actions button:hover {
-  background: #0094b0;
-}
-
-form {
-  margin-bottom: 20px;
+  background: #004080;
+  color: white;
+  padding: 20px;
 }
