@@ -11,7 +11,7 @@
   </header>
 
   <main>
-    <form action="https://backend-code-qta6.onrender.com/candidate_register" method="POST">
+    <form action="https://backend-code-qta6.onrender.com/candidate_register" method="POST" enctype="multipart/form-data">
       <label>Name:</label><br>
       <input type="text" name="name" required><br>
 
@@ -31,6 +31,9 @@
 
       <label>Party Name:</label><br>
       <input type="text" name="party_name" required><br>
+
+      <label>Party Logo:</label><br>
+      <input type="file" name="party_logo" accept="image/*" required><br>
 
       <label>Party Moto:</label><br>
       <textarea name="moto" required></textarea><br>
