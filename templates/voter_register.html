@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Voter Registration</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Voter Registration</h1>
+  </header>
+
+  <main>
+    <form action="/voter_register" method="POST">
+      <label>Name:</label><br>
+      <input type="text" name="name" required><br>
+
+      <label>Year:</label><br>
+      <input type="text" name="year" required><br>
+
+      <label>Age:</label><br>
+      <input type="number" name="age" required><br>
+
+      <label>Gender:</label><br>
+      <select name="gender" required>
+        <option value="">Select</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select><br>
+
+      <label>Username:</label><br>
+      <input type="text" name="username" required><br>
+
+      <label>Password:</label><br>
+      <input type="password" name="password" required><br>
+
+      <button type="submit">Register</button>
+    </form>
+    <a href="/voter_login_page">Already Registered? Login</a>
+  </main>
+
+  <footer>
+    <a href="/">Home</a>
+  </footer>
+</body>
+</html>
