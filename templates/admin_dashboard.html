@@ -4,175 +4,65 @@
   <meta charset="UTF-8" />
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="/static/styles.css" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      padding: 20px;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    section {
-      background: #fff;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 5px #ccc;
-    }
-    section h2 {
-      margin: 0;
-      padding: 15px;
-      background: #333;
-      color: #fff;
-      cursor: pointer;
-    }
-    section .content {
-      padding: 15px;
-      display: none;
-    }
-    section.active .content {
-      display: block;
-    }
-    label {
-      display: block;
-      margin: 8px 0 4px;
-    }
-    input[type="datetime-local"] {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    button {
-      background: #007bff;
-      border: none;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    table, th, td {
-      border: 1px solid #ddd;
-    }
-    th, td {
-      padding: 10px;
-      text-align: left;
-    }
-    footer {
-      text-align: center;
-      margin-top: 30px;
-    }
-  </style>
 </head>
 <body>
-
   <header>
     <h1>Admin Dashboard</h1>
   </header>
 
-  <!-- Countdown Section -->
-  <section id="countdown">
+  <main>
     <h2>Countdown Controls</h2>
-    <div class="content">
-      <form action="/set_countdown" method="POST">
-        <h3>Voter Registration</h3>
-        <p>Start: {{ countdowns.voter_registration.start or 'Not set' }}</p>
-        <p>End: {{ countdowns.voter_registration.end or 'Not set' }}</p>
-        <label>Start:</label>
-        <input type="datetime-local" name="voter_start" required>
-        <label>End:</label>
-        <input type="datetime-local" name="voter_end" required>
+    <form action="/set_countdown" method="POST">
+      <h3>Voter Registration</h3>
+      <input type="datetime-local" name="voter_start" required>
+      <input type="datetime-local" name="voter_end" required><br>
 
-        <h3>Candidate Registration</h3>
-        <p>Start: {{ countdowns.candidate_registration.start or 'Not set' }}</p>
-        <p>End: {{ countdowns.candidate_registration.end or 'Not set' }}</p>
-        <label>Start:</label>
-        <input type="datetime-local" name="cand_start" required>
-        <label>End:</label>
-        <input type="datetime-local" name="cand_end" required>
+      <h3>Candidate Registration</h3>
+      <input type="datetime-local" name="cand_start" required>
+      <input type="datetime-local" name="cand_end" required><br>
 
-        <h3>Voting</h3>
-        <p>Start: {{ countdowns.voting.start or 'Not set' }}</p>
-        <p>End: {{ countdowns.voting.end or 'Not set' }}</p>
-        <label>Start:</label>
-        <input type="datetime-local" name="voting_start" required>
-        <label>End:</label>
-        <input type="datetime-local" name="voting_end" required>
+      <h3>Voting</h3>
+      <input type="datetime-local" name="voting_start" required>
+      <input type="datetime-local" name="voting_end" required><br>
 
-        <button type="submit">Save Countdown</button>
-      </form>
-    </div>
-  </section>
+      <button type="submit">Save</button>
+    </form>
 
-  <!-- Candidates Section -->
-  <section id="candidates">
     <h2>Candidates</h2>
-    <div class="content">
-      <table>
-        <tr>
-          <th>Party</th>
-          <th>Name</th>
-          <th>Moto</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-        {% for candidate in candidates %}
-        <tr>
-          <td>{{ candidate.party_name }}</td>
-          <td>{{ candidate.name }}</td>
-          <td>{{ candidate.moto }}</td>
-          <td>{{ 'Banned' if candidate.banned else 'Active' }}</td>
-          <td>
-            {% if candidate.banned %}
-              <form action="/unban_candidate" method="POST">
-                <input type="hidden" name="candidate_username" value="{{ candidate.username }}">
-                <button type="submit">Unban</button>
-              </form>
-            {% else %}
-              <form action="/ban_candidate" method="POST">
-                <input type="hidden" name="candidate_username" value="{{ candidate.username }}">
-                <button type="submit">Ban</button>
-              </form>
-            {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-    </div>
-  </section>
+    <table>
+      <tr>
+        <th>Party</th><th>Name</th><th>Moto</th><th>Status</th><th>Actions</th>
+      </tr>
+      {% for c in candidates %}
+      <tr>
+        <td>{{ c['party_name'] }}</td>
+        <td>{{ c['name'] }}</td>
+        <td>{{ c['moto'] }}</td>
+        <td>{{ 'Banned' if c['banned'] else 'Active' }}</td>
+        <td>
+          {% if c['banned'] %}
+          <form action="/unban_candidate" method="POST">
+            <input type="hidden" name="candidate_username" value="{{ c['username'] }}">
+            <button type="submit">Unban</button>
+          </form>
+          {% else %}
+          <form action="/ban_candidate" method="POST">
+            <input type="hidden" name="candidate_username" value="{{ c['username'] }}">
+            <button type="submit">Ban</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
 
-  <!-- Other Controls -->
-  <section id="admin-actions">
-    <h2>Admin Actions</h2>
-    <div class="content">
-      <form action="/generate_pdf" method="POST">
-        <button type="submit">Generate Results PDF</button>
-      </form>
-
-      <form action="/clear_data" method="GET">
-        <button type="submit" onclick="return confirm('Are you sure? This will erase all data!')">Clear All Data</button>
-      </form>
-    </div>
-  </section>
+    <form action="/clear_data">
+      <button type="submit">Clear All Data</button>
+    </form>
+  </main>
 
   <footer>
-    <a href="/">Back to Home</a>
+    <a href="/">Home</a>
   </footer>
-
-  <script>
-    const sections = document.querySelectorAll("section h2");
-    sections.forEach(h2 => {
-      h2.addEventListener("click", () => {
-        h2.parentElement.classList.toggle("active");
-      });
-    });
-  </script>
-
 </body>
 </html>
