@@ -11,10 +11,12 @@ CORS(app)
 # ----------------------- Utilities ----------------------------
 
 def load_json(filename):
-    # If file does not exist, create it with []
     if not os.path.exists(filename):
         with open(filename, 'w') as f:
-            json.dump([], f)
+            if filename == 'countdowns.json':
+                json.dump({}, f)
+            else:
+                json.dump([], f)
     with open(filename, 'r') as f:
         return json.load(f)
 
@@ -81,7 +83,6 @@ def vote(party):
         return redirect('/')
     votes = load_json('votes.json')
     username = session['voter']
-    # Remove any previous vote by same voter
     votes = [v for v in votes if v['voter'] != username]
     votes.append({"voter": username, "party": party})
     save_json('votes.json', votes)
@@ -101,7 +102,8 @@ def candidate_register():
         "age": request.form['age'],
         "gender": request.form['gender'],
         "username": request.form['username'],
-        "password": request.form['password']
+        "password": request.form['password'],
+        "banned": False  # default status
     }
     candidates.append(new_candidate)
     save_json('candidates.json', candidates)
@@ -151,19 +153,19 @@ def admin_dashboard():
         return redirect('/')
     candidates = load_json('candidates.json')
     voters = load_json('voters.json')
-    countdown = load_json('countdown.json')
+    countdowns = load_json('countdowns.json')
     votes = get_current_votes()
     return render_template('admin_dashboard.html',
                            candidates=candidates,
                            voters=voters,
-                           countdowns=countdown,  # FIX: pass correct variable name
+                           countdowns=countdowns,
                            votes=votes)
 
 @app.route('/set_countdown', methods=['POST'])
 def set_countdown():
     if 'admin' not in session:
         return redirect('/')
-    countdown = {
+    countdowns = {
         "candidate_registration": {
             "start": request.form['cand_start'],
             "end": request.form['cand_end']
@@ -177,7 +179,7 @@ def set_countdown():
             "end": request.form['voting_end']
         }
     }
-    save_json('countdown.json', countdown)
+    save_json('countdowns.json', countdowns)
     return redirect('/admin_dashboard')
 
 @app.route('/clear_data')
@@ -187,7 +189,7 @@ def clear_data():
     save_json('candidates.json', [])
     save_json('voters.json', [])
     save_json('votes.json', [])
-    save_json('countdown.json', {})
+    save_json('countdowns.json', {})
     return redirect('/admin_dashboard')
 
 @app.route('/live_result')
