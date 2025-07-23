@@ -2,39 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>deR MGR Chockalingham College Voting System</title>
+  <title>College Voting System</title>
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
   <header>
     <h1>deR MGR Chockalingham College</h1>
-    <h2>Welcome to the Online Voting System</h2>
+    <h2>Online Voting System</h2>
   </header>
 
   <main>
-    <div class="card">
-      <h3>Voter Portal</h3>
-      <a href="voter_register_login.html">Register / Login</a>
-    </div>
+    <p>Welcome! Participate in the fair and transparent voting system.</p>
+    <button onclick="window.location.href='/role_select'">Enter</button>
 
-    <div class="card">
-      <h3>Candidate Portal</h3>
-      <a href="candidate_register_login.html">Register / Login</a>
-    </div>
+    <section class="countdowns">
+      <h3>Countdowns</h3>
+      <p>Candidate Registration: {{ countdowns['candidate_registration']['start'] }} - {{ countdowns['candidate_registration']['end'] }}</p>
+      <p>Voter Registration: {{ countdowns['voter_registration']['start'] }} - {{ countdowns['voter_registration']['end'] }}</p>
+      <p>Voting: {{ countdowns['voting']['start'] }} - {{ countdowns['voting']['end'] }}</p>
+    </section>
 
-    <div class="card">
-      <h3>Admin Portal</h3>
-      <a href="admin_login.html">Admin Login</a>
-    </div>
-
-    <div class="card">
-      <h3>Live Results</h3>
-      <a href="live_result.html">View Live Result</a>
+    <div class="live-result">
+      <a href="/live_result">View Live Results</a>
     </div>
   </main>
 
   <footer>
-    <p>&copy; 2025 deR MGR Chockalingham College Voting System</p>
+    <p>&copy; 2025 College Voting System</p>
   </footer>
 </body>
 </html>
+
+
