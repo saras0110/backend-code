@@ -14,7 +14,11 @@ def load_json(filename):
     if not os.path.exists(filename):
         with open(filename, 'w') as f:
             if filename == 'countdowns.json':
-                json.dump({}, f)
+                json.dump({
+                    "candidate_registration": {"start": "", "end": ""},
+                    "voter_registration": {"start": "", "end": ""},
+                    "voting": {"start": "", "end": ""}
+                }, f)
             else:
                 json.dump([], f)
     with open(filename, 'r') as f:
@@ -103,7 +107,7 @@ def candidate_register():
         "gender": request.form['gender'],
         "username": request.form['username'],
         "password": request.form['password'],
-        "banned": False  # default status
+        "banned": False
     }
     candidates.append(new_candidate)
     save_json('candidates.json', candidates)
@@ -189,7 +193,11 @@ def clear_data():
     save_json('candidates.json', [])
     save_json('voters.json', [])
     save_json('votes.json', [])
-    save_json('countdowns.json', {})
+    save_json('countdowns.json', {
+        "candidate_registration": {"start": "", "end": ""},
+        "voter_registration": {"start": "", "end": ""},
+        "voting": {"start": "", "end": ""}
+    })
     return redirect('/admin_dashboard')
 
 @app.route('/live_result')
