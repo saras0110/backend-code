@@ -16,10 +16,13 @@
       <form action="https://backend-code-qta6.onrender.com/candidate_register" method="POST" enctype="multipart/form-data">
         <label>Candidate Name:</label><br>
         <input type="text" name="name" required><br>
+
         <label>Year of Study:</label><br>
         <input type="text" name="year" required><br>
+
         <label>Age:</label><br>
         <input type="number" name="age" required><br>
+
         <label>Gender:</label><br>
         <select name="gender" required>
           <option value="">Select Gender</option>
@@ -27,12 +30,22 @@
           <option value="Female">Female</option>
           <option value="Other">Other</option>
         </select><br>
+
         <label>Party Name:</label><br>
         <input type="text" name="party_name" required><br>
+
         <label>Party Moto:</label><br>
-        <textarea name="party_moto" rows="3" required></textarea><br>
+        <textarea name="moto" rows="3" required></textarea><br>
+
         <label>Party Logo:</label><br>
-        <input type="file" name="party_logo" accept="image/*" required><br>
+        <input type="file" name="logo" accept="image/*" required><br>
+
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br>
+
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br>
+
         <button type="submit">Register</button>
       </form>
     </section>
@@ -40,10 +53,12 @@
     <section class="card">
       <h2>Already Registered? Login</h2>
       <form action="https://backend-code-qta6.onrender.com/candidate_login" method="POST">
-        <label>Candidate ID / Username:</label><br>
-        <input type="text" name="candidate_id" required><br>
+        <label>Username:</label><br>
+        <input type="text" name="username" required><br>
+
         <label>Password:</label><br>
         <input type="password" name="password" required><br>
+
         <button type="submit">Login</button>
       </form>
     </section>
@@ -54,3 +69,4 @@
   </footer>
 </body>
 </html>
+
