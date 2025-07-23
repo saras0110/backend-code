@@ -186,6 +186,30 @@ def set_countdown():
     save_json('countdowns.json', countdowns)
     return redirect('/admin_dashboard')
 
+@app.route('/ban_candidate', methods=['POST'])
+def ban_candidate():
+    if 'admin' not in session:
+        return redirect('/')
+    username = request.form['candidate_username']
+    candidates = load_json('candidates.json')
+    for c in candidates:
+        if c['username'] == username:
+            c['banned'] = True
+    save_json('candidates.json', candidates)
+    return redirect('/admin_dashboard')
+
+@app.route('/unban_candidate', methods=['POST'])
+def unban_candidate():
+    if 'admin' not in session:
+        return redirect('/')
+    username = request.form['candidate_username']
+    candidates = load_json('candidates.json')
+    for c in candidates:
+        if c['username'] == username:
+            c['banned'] = False
+    save_json('candidates.json', candidates)
+    return redirect('/admin_dashboard')
+
 @app.route('/clear_data')
 def clear_data():
     if 'admin' not in session:
