@@ -135,7 +135,7 @@ def candidate_register():
     new_candidate = {
         "name": request.form['name'],
         "party_name": request.form['party_name'],
-        "moto": request.form['party_moto'],
+        "moto": request.form['moto'],
         "year": request.form['year'],
         "age": request.form['age'],
         "gender": request.form['gender'],
