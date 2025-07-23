@@ -3,17 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="https://backend-code-qta6.onrender.com/static/styles.css" />
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    section {
+      background: #fff;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 5px #ccc;
+    }
+    section h2 {
+      margin: 0;
+      padding: 15px;
+      background: #333;
+      color: #fff;
+      cursor: pointer;
+    }
+    section .content {
+      padding: 15px;
+      display: none;
+    }
+    section.active .content {
+      display: block;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+    input[type="datetime-local"] {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #007bff;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
+
   <header>
     <h1>Admin Dashboard</h1>
   </header>
 
-  <main>
-    <section class="countdown-section">
-      <h2>Countdown Controls</h2>
-      <form action="https://backend-code-qta6.onrender.com/set_countdown" method="POST">
+  <!-- Countdown Section -->
+  <section id="countdown">
+    <h2>Countdown Controls</h2>
+    <div class="content">
+      <form action="/set_countdown" method="POST">
         <h3>Voter Registration</h3>
         <p>Start: {{ countdowns.voter_registration.start or 'Not set' }}</p>
         <p>End: {{ countdowns.voter_registration.end or 'Not set' }}</p>
@@ -40,14 +107,17 @@
 
         <button type="submit">Save Countdown</button>
       </form>
-    </section>
+    </div>
+  </section>
 
-    <section class="candidates-section">
-      <h2>Candidates</h2>
+  <!-- Candidates Section -->
+  <section id="candidates">
+    <h2>Candidates</h2>
+    <div class="content">
       <table>
         <tr>
           <th>Party</th>
-          <th>Candidate Name</th>
+          <th>Name</th>
           <th>Moto</th>
           <th>Status</th>
           <th>Actions</th>
@@ -60,12 +130,12 @@
           <td>{{ 'Banned' if candidate.banned else 'Active' }}</td>
           <td>
             {% if candidate.banned %}
-              <form action="https://backend-code-qta6.onrender.com/unban_candidate" method="POST">
+              <form action="/unban_candidate" method="POST">
                 <input type="hidden" name="candidate_username" value="{{ candidate.username }}">
                 <button type="submit">Unban</button>
               </form>
             {% else %}
-              <form action="https://backend-code-qta6.onrender.com/ban_candidate" method="POST">
+              <form action="/ban_candidate" method="POST">
                 <input type="hidden" name="candidate_username" value="{{ candidate.username }}">
                 <button type="submit">Ban</button>
               </form>
@@ -74,22 +144,35 @@
         </tr>
         {% endfor %}
       </table>
-    </section>
+    </div>
+  </section>
 
-    <section class="admin-actions">
-      <h2>Other Controls</h2>
-      <form action="https://backend-code-qta6.onrender.com/generate_pdf" method="POST">
+  <!-- Other Controls -->
+  <section id="admin-actions">
+    <h2>Admin Actions</h2>
+    <div class="content">
+      <form action="/generate_pdf" method="POST">
         <button type="submit">Generate Results PDF</button>
       </form>
 
-      <form action="https://backend-code-qta6.onrender.com/clear_data" method="GET">
+      <form action="/clear_data" method="GET">
         <button type="submit" onclick="return confirm('Are you sure? This will erase all data!')">Clear All Data</button>
       </form>
-    </section>
-  </main>
+    </div>
+  </section>
 
   <footer>
     <a href="/">Back to Home</a>
   </footer>
+
+  <script>
+    const sections = document.querySelectorAll("section h2");
+    sections.forEach(h2 => {
+      h2.addEventListener("click", () => {
+        h2.parentElement.classList.toggle("active");
+      });
+    });
+  </script>
+
 </body>
 </html>
