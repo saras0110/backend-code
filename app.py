@@ -232,6 +232,21 @@ def unban_candidate():
     save_json('candidates.json', candidates)
     return redirect(url_for('admin_dashboard'))
 
+@app.route('/clear_data', methods=['POST'])
+def clear_data():
+    if 'admin' not in session:
+        return redirect(url_for('admin_login_page'))
+    save_json('candidates.json', [])
+    save_json('voters.json', [])
+    save_json('votes.json', [])
+    save_json('countdowns.json', {
+        "candidate_registration": {"start": "", "end": ""},
+        "voter_registration": {"start": "", "end": ""},
+        "voting": {"start": "", "end": ""}
+    })
+    return redirect(url_for('admin_dashboard'))
+
+
 @app.route('/live_result')
 def live_result():
     votes = get_current_votes()
