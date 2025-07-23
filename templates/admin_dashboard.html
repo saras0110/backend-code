@@ -15,24 +15,24 @@
       <h2>Countdown Controls</h2>
       <form action="https://backend-code-qta6.onrender.com/set_countdown" method="POST">
         <h3>Voter Registration</h3>
-        <p>Start: {{ countdowns.voter_registration.start }}</p>
-        <p>End: {{ countdowns.voter_registration.end }}</p>
+        <p>Start: {{ countdowns.voter_registration.start or 'Not set' }}</p>
+        <p>End: {{ countdowns.voter_registration.end or 'Not set' }}</p>
         <label>Start:</label>
         <input type="datetime-local" name="voter_start" required>
         <label>End:</label>
         <input type="datetime-local" name="voter_end" required>
 
         <h3>Candidate Registration</h3>
-        <p>Start: {{ countdowns.candidate_registration.start }}</p>
-        <p>End: {{ countdowns.candidate_registration.end }}</p>
+        <p>Start: {{ countdowns.candidate_registration.start or 'Not set' }}</p>
+        <p>End: {{ countdowns.candidate_registration.end or 'Not set' }}</p>
         <label>Start:</label>
         <input type="datetime-local" name="cand_start" required>
         <label>End:</label>
         <input type="datetime-local" name="cand_end" required>
 
         <h3>Voting</h3>
-        <p>Start: {{ countdowns.voting.start }}</p>
-        <p>End: {{ countdowns.voting.end }}</p>
+        <p>Start: {{ countdowns.voting.start or 'Not set' }}</p>
+        <p>End: {{ countdowns.voting.end or 'Not set' }}</p>
         <label>Start:</label>
         <input type="datetime-local" name="voting_start" required>
         <label>End:</label>
