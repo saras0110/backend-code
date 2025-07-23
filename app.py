@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session
 import json
 import os
 from datetime import datetime
@@ -11,6 +11,10 @@ CORS(app)
 # ----------------------- Utilities ----------------------------
 
 def load_json(filename):
+    # If file does not exist, create it with []
+    if not os.path.exists(filename):
+        with open(filename, 'w') as f:
+            json.dump([], f)
     with open(filename, 'r') as f:
         return json.load(f)
 
@@ -77,6 +81,7 @@ def vote(party):
         return redirect('/')
     votes = load_json('votes.json')
     username = session['voter']
+    # Remove any previous vote by same voter
     votes = [v for v in votes if v['voter'] != username]
     votes.append({"voter": username, "party": party})
     save_json('votes.json', votes)
@@ -124,7 +129,7 @@ def candidate_dashboard():
         if c['username'] == session['candidate']:
             user = c
             break
-    vote_count = votes.get(user['party_name'], 0)
+    vote_count = votes.get(user['party_name'], 0) if user else 0
     return render_template('candidate_dashboard.html', candidate=user, votes=vote_count)
 
 # ----------------------- Admin ----------------------------
@@ -148,7 +153,11 @@ def admin_dashboard():
     voters = load_json('voters.json')
     countdown = load_json('countdown.json')
     votes = get_current_votes()
-    return render_template('admin_dashboard.html', candidates=candidates, voters=voters, countdown=countdown, votes=votes)
+    return render_template('admin_dashboard.html',
+                           candidates=candidates,
+                           voters=voters,
+                           countdowns=countdown,  # FIX: pass correct variable name
+                           votes=votes)
 
 @app.route('/set_countdown', methods=['POST'])
 def set_countdown():
@@ -178,6 +187,7 @@ def clear_data():
     save_json('candidates.json', [])
     save_json('voters.json', [])
     save_json('votes.json', [])
+    save_json('countdown.json', {})
     return redirect('/admin_dashboard')
 
 @app.route('/live_result')
