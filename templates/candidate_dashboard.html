@@ -11,6 +11,7 @@
   </header>
 
   <main>
+    <img src="{{ url_for('static', filename='uploads/' + candidate.logo) }}" alt="Party Logo" width="150">
     <p>Party: {{ candidate['party_name'] }}</p>
     <p>Moto: {{ candidate['moto'] }}</p>
     <p>Votes Received: {{ votes }}</p>
