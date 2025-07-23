@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Candidate Login</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Candidate Login</h1>
+  </header>
+
+  <main>
+    {% if msg %}
+      <p style="color:red;">{{ msg }}</p>
+    {% endif %}
+    <form action="/candidate_login" method="POST">
+      <label>Username:</label><br>
+      <input type="text" name="username" required><br>
+      <label>Password:</label><br>
+      <input type="password" name="password" required><br>
+      <button type="submit">Login</button>
+    </form>
+  </main>
+
+  <footer>
+    <a href="/">Home</a>
+  </footer>
+</body>
+</html>
