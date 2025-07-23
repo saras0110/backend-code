@@ -1,11 +1,17 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import json
+import uuid 
+from werkzeug.utils import secure_filename
 import os
 from flask_cors import CORS
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 CORS(app)
+
+UPLOAD_FOLDER = 'static/uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # ----------------------- Utilities ----------------------------
 
@@ -114,6 +120,18 @@ def candidate_login_page():
 @app.route('/candidate_register', methods=['POST'])
 def candidate_register():
     candidates = load_json('candidates.json')
+     # get file
+    if 'party_logo' not in request.files:
+        return "No file uploaded", 400
+
+    file = request.files['party_logo']
+    if file.filename == '':
+        return "No selected file", 400
+
+    # secure filename
+    filename = secure_filename(file.filename)
+    unique_filename = str(uuid.uuid4()) + "_" + filename
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
     new_candidate = {
         "name": request.form['name'],
         "party_name": request.form['party_name'],
@@ -123,6 +141,7 @@ def candidate_register():
         "gender": request.form['gender'],
         "username": request.form['username'],
         "password": request.form['password'],
+        "logo": unique_filename,  # store filename
         "banned": False
     }
     candidates.append(new_candidate)
