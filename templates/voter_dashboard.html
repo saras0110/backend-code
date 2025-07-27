@@ -10,7 +10,7 @@
     <h1>Vote for Your Candidate</h1>
   </header>
 
-  <main>
+  <main class="voter-dashboard">
     {% for candidate in candidates %}
       <div class="card">
         <h3>{{ candidate['name'] }}</h3>
@@ -22,7 +22,7 @@
   </main>
 
   <footer>
-    <a href="https://backend-code-qta6.onrender.com/">Home</a>
+    <a href="https://backend-code-qta6.onrender.com/" class="home-btn">Home</a>
   </footer>
 </body>
 </html>
