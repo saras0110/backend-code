@@ -166,15 +166,6 @@ a:hover {
 
 /* === Role Select Styling === */
 
-main {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  flex-wrap: wrap;
-  min-height: calc(100vh - 200px);
-  padding: 50px 20px;
-}
 
 .card {
   background: #fff;
@@ -223,19 +214,4 @@ main {
   color: #005fa3;
 }
 
-footer {
-  text-align: center;
-  margin-top: 40px;
-}
-
-footer a {
-  color: #555;
-  font-size: 0.95rem;
-  text-decoration: underline;
-  transition: color 0.3s;
-}
-
-footer a:hover {
-  color: #222;
-}
 
