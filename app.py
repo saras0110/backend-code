@@ -4,6 +4,7 @@ import uuid
 from werkzeug.utils import secure_filename
 import os
 from flask_cors import CORS
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -42,11 +43,25 @@ def get_current_votes():
         result[party] = result.get(party, 0) + 1
     return result
 
+def is_within_period(start, end):
+    if not start or not end:
+        return False
+    now = datetime.now()
+    try:
+        start_dt = datetime.strptime(start, '%Y-%m-%dT%H:%M')
+        end_dt = datetime.strptime(end, '%Y-%m-%dT%H:%M')
+    except Exception:
+        return False
+    return start_dt <= now <= end_dt
+
+def get_countdowns():
+    return load_json('countdowns.json')
+
 # ----------------------- Main Pages ----------------------------
 
 @app.route('/')
 def index():
-    countdowns = load_json('countdowns.json')
+    countdowns = get_countdowns()
     return render_template('index.html', countdowns=countdowns)
 
 @app.route('/role_select')
@@ -57,6 +72,11 @@ def role_select():
 
 @app.route('/voter_register_page')
 def voter_register_page():
+    countdowns = get_countdowns()
+    voter_start = countdowns['voter_registration']['start']
+    voter_end = countdowns['voter_registration']['end']
+    if not is_within_period(voter_start, voter_end):
+        return "Voter registration is closed!"
     return render_template('voter_register.html')
 
 @app.route('/voter_login_page')
@@ -65,6 +85,11 @@ def voter_login_page():
 
 @app.route('/voter_register', methods=['POST'])
 def voter_register():
+    countdowns = get_countdowns()
+    voter_start = countdowns['voter_registration']['start']
+    voter_end = countdowns['voter_registration']['end']
+    if not is_within_period(voter_start, voter_end):
+        return "Voter registration is closed!"
     voters = load_json('voters.json')
     new_voter = {
         "name": request.form['name'],
@@ -93,13 +118,24 @@ def voter_login():
 def voter_dashboard():
     if 'voter' not in session:
         return redirect(url_for('voter_login_page'))
+    countdowns = get_countdowns()
+    voting_start = countdowns['voting']['start']
+    voting_end = countdowns['voting']['end']
+    if not is_within_period(voting_start, voting_end):
+        return "Voting is not open now!"
     candidates = load_json('candidates.json')
-    return render_template('voter_dashboard.html', candidates=candidates)
+    valid_candidates = [c for c in candidates if not c.get('banned', False)]
+    return render_template('voter_dashboard.html', candidates=valid_candidates)
 
 @app.route('/vote/<party>')
 def vote(party):
     if 'voter' not in session:
         return redirect(url_for('voter_login_page'))
+    countdowns = get_countdowns()
+    voting_start = countdowns['voting']['start']
+    voting_end = countdowns['voting']['end']
+    if not is_within_period(voting_start, voting_end):
+        return "Voting is closed!"
     votes = load_json('votes.json')
     username = session['voter']
     votes = [v for v in votes if v['voter'] != username]
@@ -111,6 +147,11 @@ def vote(party):
 
 @app.route('/candidate_register_page')
 def candidate_register_page():
+    countdowns = get_countdowns()
+    cand_start = countdowns['candidate_registration']['start']
+    cand_end = countdowns['candidate_registration']['end']
+    if not is_within_period(cand_start, cand_end):
+        return "Candidate registration is closed!"
     return render_template('candidate_register.html')
 
 @app.route('/candidate_login_page')
@@ -119,16 +160,17 @@ def candidate_login_page():
 
 @app.route('/candidate_register', methods=['POST'])
 def candidate_register():
+    countdowns = get_countdowns()
+    cand_start = countdowns['candidate_registration']['start']
+    cand_end = countdowns['candidate_registration']['end']
+    if not is_within_period(cand_start, cand_end):
+        return "Candidate registration is closed!"
     candidates = load_json('candidates.json')
-     # get file
     if 'party_logo' not in request.files:
         return "No file uploaded", 400
-
     file = request.files['party_logo']
     if file.filename == '':
         return "No selected file", 400
-
-    # secure filename
     filename = secure_filename(file.filename)
     unique_filename = str(uuid.uuid4()) + "_" + filename
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], unique_filename))
@@ -141,7 +183,7 @@ def candidate_register():
         "gender": request.form['gender'],
         "username": request.form['username'],
         "password": request.form['password'],
-        "logo": unique_filename,  # store filename
+        "logo": unique_filename,
         "banned": False
     }
     candidates.append(new_candidate)
@@ -246,16 +288,16 @@ def clear_data():
     })
     return redirect(url_for('admin_dashboard'))
 
-
 @app.route('/live_result')
 def live_result():
     votes = get_current_votes()
-    return render_template('live_result.html', votes=votes)
+    candidates = load_json('candidates.json')
+    active_candidates = [c for c in candidates if not c.get('banned', False)]
+    active_votes = {party: count for party, count in votes.items() if any(c['party_name'] == party for c in active_candidates)}
+    return render_template('live_result.html', votes=active_votes)
 
 # ----------------------- Run ----------------------------
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 10000))  # default fallback port
+    port = int(os.environ.get('PORT', 10000))  # fallback port
     app.run(host='0.0.0.0', port=port)
-
-
