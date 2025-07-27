@@ -6,12 +6,13 @@ body {
   margin: 0;
   background: #f9fafb;
   color: #333;
+  overflow: hidden; /* prevent scroll */
 }
 
 header {
   background: linear-gradient(135deg, #003366 0%, #005fa3 100%);
   color: #fff;
-  padding: 40px 20px;
+  padding: 30px 20px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -19,11 +20,10 @@ header {
 header h1 {
   margin: 0;
   font-size: 2rem;
-  letter-spacing: 0.5px;
 }
 
 header h2 {
-  margin: 10px 0 0;
+  margin: 5px 0 0;
   font-weight: 400;
   font-size: 1rem;
   opacity: 0.95;
@@ -34,10 +34,9 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 30px;
-  padding: 40px 20px;
-  min-height: calc(100vh - 120px);
-  box-sizing: border-box;
+  gap: 25px;
+  height: calc(100vh - 100px); /* fits remaining space */
+  overflow: hidden;
 }
 
 .hero {
@@ -46,7 +45,7 @@ main {
 
 .hero p {
   font-size: 1rem;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   color: #444;
 }
 
@@ -54,7 +53,7 @@ main {
   display: inline-block;
   background: #007acc;
   color: #fff;
-  padding: 10px 28px;
+  padding: 10px 24px;
   border-radius: 30px;
   text-decoration: none;
   font-size: 0.95rem;
@@ -68,15 +67,23 @@ main {
   transform: translateY(-2px);
 }
 
-.countdowns {
+.countdowns,
+.live-result {
   background: #fff;
-  border-left: 4px solid #007acc;
-  padding: 20px 25px;
+  padding: 15px 20px;
   border-radius: 10px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
   max-width: 350px;
   width: 100%;
   text-align: left;
+}
+
+.countdowns {
+  border-left: 4px solid #007acc;
+}
+
+.live-result {
+  border-left: 4px solid #28a745;
 }
 
 .countdowns h3 {
@@ -85,51 +92,62 @@ main {
 }
 
 .countdowns p {
-  margin: 6px 0;
-  color: #555;
+  margin: 5px 0;
   font-size: 0.9rem;
-}
-
-.live-result {
-  background: #fff;
-  border-left: 4px solid #28a745;
-  padding: 15px 20px;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-  max-width: 350px;
-  width: 100%;
+  color: #555;
 }
 
 .live-result a {
-  display: inline-block;
   color: #28a745;
   font-weight: 600;
-  text-decoration: none;
-  transition: color 0.3s;
 }
 
 .live-result a:hover {
   color: #1e7e34;
+  text-decoration: none;
 }
 
-/* ========================
-   ROLE SELECT PAGE SECTION
-   ======================== */
+/* BACK BUTTON at top (assumed class="back-btn") */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #fff;
+  border: 2px solid #007acc;
+  color: #007acc;
+  padding: 8px 18px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  background: #007acc;
+  color: #fff;
+}
+
+/* ==========================
+   ROLE SELECT PAGE — CARDS
+   ========================== */
 
 .role-section {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
-  margin-top: 40px;
+  align-items: center;
+  flex-wrap: nowrap;   /* stays in one row! */
+  gap: 25px;
+  height: calc(100vh - 100px);
+  overflow-x: auto; /* allow slight horizontal scroll on tiny screens only */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .role-card {
-  flex: 1 1 200px;
-  max-width: 220px;
+  flex: 0 0 200px;
   background: #fff;
   border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   text-align: center;
   padding: 30px 20px;
   transition: transform 0.3s, box-shadow 0.3s;
@@ -145,23 +163,6 @@ main {
   margin: 0 0 15px;
   color: #fff;
   font-size: 1.2rem;
-}
-
-/* Use colored backgrounds */
-.role-card.blue {
-  background: #007acc;
-}
-
-.role-card.orange {
-  background: #ff7f50;
-}
-
-.role-card.green {
-  background: #28a745;
-}
-
-.role-card.pink {
-  background: #e91e63;
 }
 
 .role-card a {
@@ -181,10 +182,26 @@ main {
   color: #333;
 }
 
+.role-card.blue {
+  background: #007acc;
+}
+
+.role-card.orange {
+  background: #ff7f50;
+}
+
+.role-card.green {
+  background: #28a745;
+}
+
+.role-card.pink {
+  background: #e91e63;
+}
+
 footer {
   text-align: center;
-  padding: 20px;
-  font-size: 0.85rem;
+  padding: 15px;
+  font-size: 0.8rem;
   color: #777;
 }
 
@@ -196,41 +213,30 @@ a:hover {
   text-decoration: underline;
 }
 
-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 30px;
-  background: #007acc;
-  color: #fff;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #005fa3;
-}
-
 @media (max-width: 768px) {
-  main {
-    padding: 30px 20px;
-    gap: 25px;
-  }
-
   header h1 {
     font-size: 1.7rem;
   }
 
-  .countdowns, .live-result {
-    width: 90%;
+  main {
+    height: auto;
   }
 
-  .enter-btn {
-    padding: 10px 24px;
-    font-size: 0.9rem;
+  .role-section {
+    flex-wrap: wrap;
+    height: auto;
   }
 
   .role-card {
+    flex: 1 1 100%;
     max-width: 90%;
   }
+
+  .back-btn {
+    top: 15px;
+    left: 15px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+  }
 }
+
