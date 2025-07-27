@@ -37,7 +37,7 @@ header h2 {
 main {
   flex: 1 1 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center; /* center content vertically */
   gap: 30px;
