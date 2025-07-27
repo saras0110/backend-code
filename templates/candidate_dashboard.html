@@ -11,14 +11,16 @@
   </header>
 
   <main>
+    <div  class="candidate-dashboard">
     <img src="{{ url_for('static', filename='uploads/' + candidate.logo) }}" alt="Party Logo" width="150">
     <p>Party: {{ candidate['party_name'] }}</p>
     <p>Moto: {{ candidate['moto'] }}</p>
     <p>Votes Received: {{ votes }}</p>
+    </div>
   </main>
 
   <footer>
-    <a href="https://backend-code-qta6.onrender.com/">Home</a>
+    <a  class="home-btn" href="https://backend-code-qta6.onrender.com/">Home</a>
   </footer>
 </body>
 </html>
