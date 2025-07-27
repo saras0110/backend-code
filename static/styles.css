@@ -28,29 +28,25 @@ header h2 {
 }
 
 .hero {
-  margin: 60px auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  margin: 50px auto;
 }
 
 .enter-btn {
   display: inline-block;
   background: #007acc;
   color: #fff;
-  padding: 15px 50px;
+  padding: 15px 40px;
   border-radius: 50px;
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: background 0.3s, transform 0.2s;
 }
 
 .enter-btn:hover {
   background: #005fa3;
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 
