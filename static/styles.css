@@ -261,6 +261,82 @@ a:hover {
   font-size: 0.9rem;
 }
 
+/* === Login Form Styling === */
+.login-form {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels inside login form */
+.login-form label {
+  font-weight: 500;
+  color: #003366;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Inputs inside login form */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  transition: border 0.3s;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+  border-color: #007acc;
+  outline: none;
+}
+
+/* Submit button */
+.login-form input[type="submit"],
+.login-form button {
+  background: #007acc;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-form input[type="submit"]:hover,
+.login-form button:hover {
+  background: #005fa3;
+}
+
+/* Home button under login */
+.home-btn {
+  display: inline-block;
+  margin: 20px auto 0;
+  background: #007acc;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.home-btn:hover {
+  background: #005fa3;
+  transform: translateY(-2px);
+}
+
+
 
 /* === Role Select Styling === */
 body.role-select {
