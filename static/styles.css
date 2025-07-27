@@ -164,6 +164,81 @@ a:hover {
   }
 }
 
+/* === Voter Dashboard Custom Styling === */
+.voter-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* Cards inside Voter Dashboard */
+.voter-dashboard .card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px 20px;
+  text-align: center;
+  width: 250px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.voter-dashboard .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.voter-dashboard .card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #003366;
+}
+
+.voter-dashboard .card p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.voter-dashboard .card a {
+  display: inline-block;
+  background: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  margin-top: 10px;
+}
+
+.voter-dashboard .card a:hover {
+  background: #1e7e34;
+  transform: translateY(-2px);
+}
+
+/* Footer button (optional override for voter page) */
+footer a {
+  display: inline-block;
+  text-align: center;
+  background: #007acc;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+  margin: 40px auto 0;
+}
+
+footer a:hover {
+  background: #005fa3;
+  transform: translateY(-2px);
+}
+
+
 /* === Candidate Dashboard Styling === */
 .candidate-dashboard {
   max-width: 600px;
