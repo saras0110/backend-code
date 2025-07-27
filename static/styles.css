@@ -4,49 +4,49 @@
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
-  background: #f9fafb;  /* softer, modern background */
+  background: #f9fafb;
   color: #333;
 }
 
 header {
   background: linear-gradient(135deg, #003366 0%, #005fa3 100%);
   color: #fff;
-  padding: 80px 20px 60px;
+  padding: 40px 20px;  /* reduced padding */
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
   margin: 0;
-  font-size: 2.7rem;
+  font-size: 2rem;   /* reduced size */
   letter-spacing: 0.5px;
 }
 
 header h2 {
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 1rem;
   opacity: 0.95;
 }
 
 main {
   display: flex;
-  flex-direction: column; /* stack sections vertically */
+  flex-direction: column;
   align-items: center;
-  gap: 40px; /* space between sections */
-  padding: 50px 20px;
-  max-width: 1200px;
-  margin: auto;
+  justify-content: center;   /* center vertically */
+  gap: 30px;
+  padding: 20px;
+  min-height: calc(100vh - 120px);  /* fill remaining viewport after header & footer */
+  box-sizing: border-box;
 }
 
 .hero {
   text-align: center;
 }
 
-.hero p,
-.intro-text {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
+.hero p {
+  font-size: 1rem;
+  margin-bottom: 15px;
   color: #444;
 }
 
@@ -54,84 +54,49 @@ main {
   display: inline-block;
   background: #007acc;
   color: #fff;
-  padding: 12px 32px;
+  padding: 10px 28px;
   border-radius: 30px;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: background 0.3s, transform 0.2s;
 }
 
 .enter-btn:hover {
   background: #005fa3;
-  transform: translateY(-3px);
-}
-
-.card {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  width: 250px;
-  padding: 30px 20px;
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-}
-
-.card h3 {
-  margin: 0 0 20px;
-  color: #003366;
-}
-
-.card a {
-  display: inline-block;
-  padding: 10px 25px;
-  background: #007acc;
-  color: #fff;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.3s;
-}
-
-.card a:hover {
-  background: #005fa3;
+  transform: translateY(-2px);
 }
 
 .countdowns {
   background: #fff;
-  border-left: 5px solid #007acc;
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  max-width: 400px;
+  border-left: 4px solid #007acc;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  max-width: 350px;
   width: 100%;
   text-align: left;
 }
 
 .countdowns h3 {
-  margin-top: 0;
+  margin: 0 0 10px;
   color: #003366;
 }
 
 .countdowns p {
-  margin: 8px 0;
+  margin: 6px 0;
   color: #555;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .live-result {
   background: #fff;
-  border-left: 5px solid #28a745;
-  padding: 20px 25px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  max-width: 400px;
+  border-left: 4px solid #28a745;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  max-width: 350px;
   width: 100%;
 }
 
@@ -147,19 +112,11 @@ main {
   color: #1e7e34;
 }
 
-button {
-  padding: 10px 25px;
-  border: none;
-  border-radius: 30px;
-  background: #007acc;
-  color: #fff;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #005fa3;
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.85rem;
+  color: #777;
 }
 
 a {
@@ -171,29 +128,37 @@ a:hover {
   text-decoration: underline;
 }
 
-footer {
-  text-align: center;
-  padding: 30px 20px;
-  font-size: 0.9rem;
-  color: #777;
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background: #007acc;
+  color: #fff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #005fa3;
 }
 
 @media (max-width: 768px) {
   main {
-    padding: 30px 20px;
-    gap: 30px;
+    padding: 20px;
+    gap: 25px;
   }
 
-  .card {
-    width: 90%;
-  }
-
-  .enter-btn {
-    padding: 10px 28px;
-    font-size: 1rem;
+  header h1 {
+    font-size: 1.7rem;
   }
 
   .countdowns, .live-result {
     width: 90%;
+  }
+
+  .enter-btn {
+    padding: 10px 24px;
+    font-size: 0.9rem;
   }
 }
