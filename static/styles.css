@@ -163,3 +163,79 @@ a:hover {
     width: 90%;
   }
 }
+
+/* === Role Select Styling === */
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  min-height: calc(100vh - 200px);
+  padding: 50px 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px 40px;
+  text-align: center;
+  width: 200px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-top: 5px solid #007acc; /* Default blue border */
+}
+
+.card:nth-of-type(1) {
+  border-top: 5px solid #007acc; /* Voter - Blue */
+}
+
+.card:nth-of-type(2) {
+  border-top: 5px solid #28a745; /* Candidate - Green */
+}
+
+.card:nth-of-type(3) {
+  border-top: 5px solid #e83e8c; /* Admin - Pink */
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #003366;
+}
+
+.card a {
+  display: inline-block;
+  margin: 5px 10px;
+  color: #007acc;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.card a:hover {
+  color: #005fa3;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+footer a {
+  color: #555;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #222;
+}
+
