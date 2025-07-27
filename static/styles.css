@@ -165,6 +165,16 @@ a:hover {
 }
 
 /* === Role Select Styling === */
+body.role-select {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+header.role-select {
+  padding: 40px 20px; /* reduced for smaller header */
+}
 main.role-select {
   display: flex;
   justify-content: center;
