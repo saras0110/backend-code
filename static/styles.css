@@ -11,14 +11,14 @@ body {
 header {
   background: linear-gradient(135deg, #003366 0%, #005fa3 100%);
   color: #fff;
-  padding: 40px 20px;  /* reduced padding */
+  padding: 40px 20px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
   margin: 0;
-  font-size: 2rem;   /* reduced size */
+  font-size: 2rem;
   letter-spacing: 0.5px;
 }
 
@@ -33,10 +33,10 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;   /* center vertically */
+  justify-content: center;
   gap: 30px;
-  padding: 20px;
-  min-height: calc(100vh - 120px);  /* fill remaining viewport after header & footer */
+  padding: 40px 20px;
+  min-height: calc(100vh - 120px);
   box-sizing: border-box;
 }
 
@@ -112,6 +112,75 @@ main {
   color: #1e7e34;
 }
 
+/* ========================
+   ROLE SELECT PAGE SECTION
+   ======================== */
+
+.role-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.role-card {
+  flex: 1 1 200px;
+  max-width: 220px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  padding: 30px 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.role-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.role-card h3 {
+  margin: 0 0 15px;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+/* Use colored backgrounds */
+.role-card.blue {
+  background: #007acc;
+}
+
+.role-card.orange {
+  background: #ff7f50;
+}
+
+.role-card.green {
+  background: #28a745;
+}
+
+.role-card.pink {
+  background: #e91e63;
+}
+
+.role-card a {
+  display: inline-block;
+  margin-top: 10px;
+  background: #fff;
+  color: inherit;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s;
+}
+
+.role-card a:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
 footer {
   text-align: center;
   padding: 20px;
@@ -120,7 +189,6 @@ footer {
 }
 
 a {
-  color: #007acc;
   text-decoration: none;
 }
 
@@ -145,7 +213,7 @@ button:hover {
 
 @media (max-width: 768px) {
   main {
-    padding: 20px;
+    padding: 30px 20px;
     gap: 25px;
   }
 
@@ -160,5 +228,9 @@ button:hover {
   .enter-btn {
     padding: 10px 24px;
     font-size: 0.9rem;
+  }
+
+  .role-card {
+    max-width: 90%;
   }
 }
