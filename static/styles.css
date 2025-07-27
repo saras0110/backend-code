@@ -179,7 +179,8 @@ main.role-select {
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
-  align-items: center; /* vertical centering */
+  align-items: center;
+  flex-direction : row;/* vertical centering */
   flex-wrap: wrap;
   gap: 40px;
   padding: 20px;
