@@ -6,7 +6,7 @@ body {
   margin: 0;
   background: #f9fafb;
   color: #333;
-  overflow: hidden; /* no scroll */
+  overflow-x: hidden; /* no scroll */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
