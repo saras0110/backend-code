@@ -261,6 +261,85 @@ a:hover {
   font-size: 0.9rem;
 }
 
+/* === Admin Dashboard Styling === */
+
+.admin-dashboard {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.admin-dashboard h1 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #003366;
+  margin-bottom: 30px;
+}
+
+.admin-dashboard h2 {
+  font-size: 1.2rem;
+  color: #005fa3;
+  margin: 20px 0 10px;
+}
+
+.admin-dashboard input[type="datetime-local"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin: 8px 5px;
+  box-sizing: border-box;
+}
+
+.admin-dashboard input[type="submit"],
+.admin-dashboard button {
+  background: #007acc;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  margin-top: 15px;
+}
+
+.admin-dashboard input[type="submit"]:hover,
+.admin-dashboard button:hover {
+  background: #005fa3;
+  transform: translateY(-2px);
+}
+
+.admin-dashboard .section {
+  margin-bottom: 30px;
+}
+
+.admin-dashboard .candidates {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.admin-dashboard .home-btn {
+  display: inline-block;
+  margin-top: 30px;
+  background: #007acc;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.admin-dashboard .home-btn:hover {
+  background: #005fa3;
+  transform: translateY(-2px);
+}
+
+
 /* === Login Form Styling === */
 .login-form {
   max-width: 400px;
