@@ -6,6 +6,9 @@ import os
 from flask_cors import CORS
 from datetime import datetime
 
+
+
+
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 CORS(app)
@@ -13,6 +16,12 @@ CORS(app)
 UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.route('/')
+def index():
+    countdowns = load_json('countdowns.json')
+    return render_template('index.html', countdowns=countdowns)
+
 
 # ----------------------- Utilities ----------------------------
 
