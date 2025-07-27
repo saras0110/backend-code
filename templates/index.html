@@ -19,12 +19,18 @@
       <a href="https://backend-code-qta6.onrender.com/role_select" class="enter-btn">Enter</a>
     </section>
 
-    <section class="countdowns">
-      <h3>Countdowns</h3>
-      <p>Candidate Registration: {{ countdowns['candidate_registration']['start'] }} - {{ countdowns['candidate_registration']['end'] }}</p>
-      <p>Voter Registration: {{ countdowns['voter_registration']['start'] }} - {{ countdowns['voter_registration']['end'] }}</p>
-      <p>Voting: {{ countdowns['voting']['start'] }} - {{ countdowns['voting']['end'] }}</p>
-    </section>
+  <section class="countdowns">
+  <h3>Countdowns</h3>
+  <p>Candidate Registration: {{ countdowns['candidate_registration']['start'] }} - {{ countdowns['candidate_registration']['end'] }}</p>
+  <div id="candCountdown"></div>
+
+  <p>Voter Registration: {{ countdowns['voter_registration']['start'] }} - {{ countdowns['voter_registration']['end'] }}</p>
+  <div id="voterCountdown"></div>
+
+  <p>Voting: {{ countdowns['voting']['start'] }} - {{ countdowns['voting']['end'] }}</p>
+  <div id="votingCountdown"></div>
+</section>
+
 
     <section class="live-result">
       <a href="https://backend-code-qta6.onrender.com/live_result">View Live Results</a>
@@ -34,5 +40,82 @@
   <footer>
     <p>&copy; 2025 College Voting System</p>
   </footer>
+
+  <script>
+  function formatTime(ms) {
+    const sec = Math.floor(ms / 1000);
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    return `${h}h ${m}m ${s}s`;
+  }
+
+  // Candidate Registration Countdown
+  const candStart = new Date("{{ countdowns['candidate_registration']['start'] }}").getTime();
+  const candEnd = new Date("{{ countdowns['candidate_registration']['end'] }}").getTime();
+  const candEl = document.getElementById('candCountdown');
+
+  function updateCandCountdown() {
+    const now = new Date().getTime();
+    let remaining = 0;
+
+    if (now < candStart) {
+      remaining = candStart - now;
+      candEl.innerHTML = "Starts in: " + formatTime(remaining);
+    } else if (now >= candStart && now <= candEnd) {
+      remaining = candEnd - now;
+      candEl.innerHTML = "Ends in: " + formatTime(remaining);
+    } else {
+      candEl.innerHTML = "Closed!";
+    }
+  }
+
+  setInterval(updateCandCountdown, 1000);
+
+  // Voter Registration Countdown
+  const voterStart = new Date("{{ countdowns['voter_registration']['start'] }}").getTime();
+  const voterEnd = new Date("{{ countdowns['voter_registration']['end'] }}").getTime();
+  const voterEl = document.getElementById('voterCountdown');
+
+  function updateVoterCountdown() {
+    const now = new Date().getTime();
+    let remaining = 0;
+
+    if (now < voterStart) {
+      remaining = voterStart - now;
+      voterEl.innerHTML = "Starts in: " + formatTime(remaining);
+    } else if (now >= voterStart && now <= voterEnd) {
+      remaining = voterEnd - now;
+      voterEl.innerHTML = "Ends in: " + formatTime(remaining);
+    } else {
+      voterEl.innerHTML = "Closed!";
+    }
+  }
+
+  setInterval(updateVoterCountdown, 1000);
+
+  // Voting Countdown
+  const votingStart = new Date("{{ countdowns['voting']['start'] }}").getTime();
+  const votingEnd = new Date("{{ countdowns['voting']['end'] }}").getTime();
+  const votingEl = document.getElementById('votingCountdown');
+
+  function updateVotingCountdown() {
+    const now = new Date().getTime();
+    let remaining = 0;
+
+    if (now < votingStart) {
+      remaining = votingStart - now;
+      votingEl.innerHTML = "Starts in: " + formatTime(remaining);
+    } else if (now >= votingStart && now <= votingEnd) {
+      remaining = votingEnd - now;
+      votingEl.innerHTML = "Ends in: " + formatTime(remaining);
+    } else {
+      votingEl.innerHTML = "Closed!";
+    }
+  }
+
+  setInterval(updateVotingCountdown, 1000);
+</script>
+
 </body>
 </html>
