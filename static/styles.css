@@ -176,60 +176,61 @@ header.role-select {
   padding: 40px 20px; /* reduced for smaller header */
 }
 main.role-select {
+  flex: 1 1 auto;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  flex-direction : row;
+  align-items: center; /* vertical centering */
   flex-wrap: wrap;
   gap: 40px;
-  min-height: calc(100vh - 160px);
-  padding: 60px 20px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .card {
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  padding: 30px 40px;
+  padding: 20px 30px;
   text-align: center;
-  width: 220px;
+  width: 200px;
   transition: transform 0.3s, box-shadow 0.3s;
-  border-top: 5px solid #007acc; /* default blue */
 }
 
 .card:nth-of-type(1) {
-  border-top: 5px solid #007acc; /* Voter - Blue */
+  border-top: 5px solid #007acc; /* Blue */
 }
 
 .card:nth-of-type(2) {
-  border-top: 5px solid #28a745; /* Candidate - Green */
+  border-top: 5px solid #28a745; /* Green */
 }
 
 .card:nth-of-type(3) {
-  border-top: 5px solid #e83e8c; /* Admin - Pink */
+  border-top: 5px solid #e83e8c; /* Pink */
 }
 
 .card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-5px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
 }
 
 .card h3 {
   margin-top: 0;
   margin-bottom: 15px;
-  color: #003366;
 }
 
 .card a {
   display: inline-block;
-  background: #007acc;
-  color: #fff;
-  padding: 8px 18px;
-  margin: 8px 5px;
+  border: none;
+  padding: 8px 16px;
+  margin: 6px 4px;
   border-radius: 20px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-decoration: none;
-  transition: background 0.3s;
+  color: #fff;
+}
+
+.card:nth-of-type(1) a {
+  background: #007acc;
 }
 
 .card:nth-of-type(2) a {
@@ -246,15 +247,15 @@ main.role-select {
 
 footer {
   text-align: center;
-  padding: 30px 20px;
+  padding: 10px 20px;
 }
 
 footer a {
   display: inline-block;
   background: #007acc;
   color: #fff;
-  padding: 10px 20px;
-  border-radius: 30px;
+  padding: 8px 16px;
+  border-radius: 20px;
   text-decoration: none;
   font-weight: 500;
   transition: background 0.3s, transform 0.2s;
