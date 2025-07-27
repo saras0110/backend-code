@@ -170,12 +170,12 @@ a:hover {
 .card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
   padding: 30px 40px;
   text-align: center;
-  width: 200px;
+  width: 220px;
   transition: transform 0.3s, box-shadow 0.3s;
-  border-top: 5px solid #007acc; /* Default blue border */
+  border-top: 5px solid #007acc; /* default blue */
 }
 
 .card:nth-of-type(1) {
@@ -192,7 +192,7 @@ a:hover {
 
 .card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
 }
 
 .card h3 {
@@ -203,15 +203,26 @@ a:hover {
 
 .card a {
   display: inline-block;
-  margin: 5px 10px;
-  color: #007acc;
-  font-weight: 500;
+  background: #007acc;
+  color: #fff;
+  padding: 8px 18px;
+  margin: 8px 5px;
+  border-radius: 20px;
+  font-size: 0.9rem;
   text-decoration: none;
-  transition: color 0.3s;
+  transition: background 0.3s;
+}
+
+.card:nth-of-type(2) a {
+  background: #28a745;
+}
+
+.card:nth-of-type(3) a {
+  background: #e83e8c;
 }
 
 .card a:hover {
-  color: #005fa3;
+  filter: brightness(0.9);
 }
 
 
