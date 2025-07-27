@@ -169,6 +169,7 @@ main.role-select {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex-direction : row;
   flex-wrap: wrap;
   gap: 40px;
   min-height: calc(100vh - 160px);
