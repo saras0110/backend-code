@@ -145,3 +145,51 @@ a:hover {
     font-size: 1rem;
   }
 }
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px; /* vertical space between sections */
+  padding: 50px 20px;
+}
+
+.hero {
+  text-align: center;
+}
+
+.intro-text {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.countdowns {
+  background: #fff;
+  border-left: 6px solid #007acc;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  text-align: left;
+}
+
+.live-result {
+  background: #fff;
+  border-left: 6px solid #007acc;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.live-result a {
+  display: inline-block;
+  color: #007acc;
+  font-weight: 600;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
