@@ -163,6 +163,102 @@ a:hover {
     width: 90%;
   }
 }
+/* Make the form container look neat and centered */
+.registration-form {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Form labels and inputs aligned vertically */
+.registration-form label {
+  font-weight: 500;
+  color: #003366;
+  margin-bottom: 4px;
+}
+
+.registration-form input[type="text"],
+.registration-form input[type="number"],
+.registration-form input[type="password"],
+.registration-form input[type="file"],
+.registration-form textarea,
+.registration-form select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border 0.3s;
+}
+
+.registration-form input:focus,
+.registration-form textarea:focus,
+.registration-form select:focus {
+  border-color: #007acc;
+  outline: none;
+}
+
+.registration-form button,
+.registration-form input[type="submit"] {
+  background: #007acc;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.registration-form button:hover,
+.registration-form input[type="submit"]:hover {
+  background: #005fa3;
+}
+
+.registration-form a {
+  color: #007acc;
+  text-decoration: none;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.registration-form a:hover {
+  text-decoration: underline;
+}
+
+/* Style the Home button nicely and keep it inside form */
+.registration-form .home-btn {
+  display: inline-block;
+  text-align: center;
+  background: #007acc;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+  margin-top: 10px;
+}
+
+.registration-form .home-btn:hover {
+  background: #005fa3;
+  transform: translateY(-2px);
+}
+
+/* Center the already registered link too */
+.registration-form .login-link {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
 
 /* === Role Select Styling === */
 body.role-select {
