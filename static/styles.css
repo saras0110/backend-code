@@ -149,7 +149,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px; /* vertical space between sections */
+  gap: 20px; /* vertical space between sections */
   padding: 50px 20px;
 }
 
