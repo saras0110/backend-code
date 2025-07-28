@@ -272,7 +272,7 @@ def set_countdown():
         "voting": {"start": request.form['voting_start'], "end": request.form['voting_end']}
     }
     save_json('countdowns.json', countdowns)
-    print("REAL FILE:", load_json('countdowns.json')))
+    print("REAL FILE:", load_json('countdowns.json'))
     return redirect(url_for('admin_dashboard'))
 
 @app.route('/ban_candidate', methods=['POST'])
