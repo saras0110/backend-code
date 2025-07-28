@@ -36,8 +36,9 @@ def load_json(filename):
                 json.dump([], f)
     with open(filename, 'r') as f:
         return json.load(f)
-
+        
 def save_json(filename, data):
+    print(f"Saving {filename}: {data}")
     with open(filename, 'w') as f:
         json.dump(data, f, indent=4)
 
@@ -261,14 +262,17 @@ def set_countdown():
         return redirect(url_for('admin_login_page'))
     def validate(dt):
         # Parse then reformat to force correct format
-        return datetime.strptime(dt, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%dT%H:%M')    
+        return datetime.strptime(dt, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%dT%H:%M')  
+
+    print("Form data:", dict(request.form))
+
     countdowns = {
         "candidate_registration": {"start": request.form['cand_start'], "end": request.form['cand_end']},
         "voter_registration": {"start": request.form['voter_start'], "end": request.form['voter_end']},
         "voting": {"start": request.form['voting_start'], "end": request.form['voting_end']}
     }
     save_json('countdowns.json', countdowns)
-    print("REAL FILE:", load_json('countdowns.json'))
+    print("REAL FILE:", load_json('countdowns.json')))
     return redirect(url_for('admin_dashboard'))
 
 @app.route('/ban_candidate', methods=['POST'])
