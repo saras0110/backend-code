@@ -259,6 +259,9 @@ def admin_dashboard():
 def set_countdown():
     if 'admin' not in session:
         return redirect(url_for('admin_login_page'))
+    def validate(dt):
+        # Parse then reformat to force correct format
+        return datetime.strptime(dt, '%Y-%m-%dT%H:%M').strftime('%Y-%m-%dT%H:%M')    
     countdowns = {
         "candidate_registration": {"start": request.form['cand_start'], "end": request.form['cand_end']},
         "voter_registration": {"start": request.form['voter_start'], "end": request.form['voter_end']},
