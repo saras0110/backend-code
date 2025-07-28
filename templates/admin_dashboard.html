@@ -13,7 +13,7 @@
   <main>
     <div class="admin-dashboard">
     <h2>Countdown Controls</h2>
-    <form action="https://backend-code-qta6.onrender.com/set_countdown" method="POST">
+    <form action="/set_countdown" method="POST">
       <h3>Voter Registration</h3>
       <input type="datetime-local" name="voter_start" required value="{{ countdowns['voter_registration']['start'] }}">
       <input type="datetime-local" name="voter_end" required value="{{ countdowns['voter_registration']['end'] }}"><br>
