@@ -92,7 +92,7 @@ def voter_register_page():
     voter_start = countdowns['voter_registration']['start']
     voter_end = countdowns['voter_registration']['end']
     if not is_within_period(voter_start, voter_end):
-        return "Voter registration is closed!"
+        return "Voter registration is closed!"  
     return render_template('voter_register.html')
 
 @app.route('/voter_login_page')
@@ -265,6 +265,7 @@ def set_countdown():
         "voting": {"start": request.form['voting_start'], "end": request.form['voting_end']}
     }
     save_json('countdowns.json', countdowns)
+    print("REAL FILE:", load_json('countdowns.json'))
     return redirect(url_for('admin_dashboard'))
 
 @app.route('/ban_candidate', methods=['POST'])
