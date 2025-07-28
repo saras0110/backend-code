@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import json
 import uuid 
+import pytz
 from werkzeug.utils import secure_filename
 import os
 from flask_cors import CORS
@@ -52,13 +53,18 @@ def get_current_votes():
 def is_within_period(start, end):
     if not start or not end:
         return False
-    now = datetime.now()
+    tz = pytz.timezone('Asia/Kolkata')
+    now = datetime.now(tz)
     try:
         start_dt = datetime.strptime(start, '%Y-%m-%dT%H:%M')
         end_dt = datetime.strptime(end, '%Y-%m-%dT%H:%M')
     except Exception:
         return False
+    start_dt = tz.localize(start_dt)
+    end_dt = tz.localize(end_dt)
+    print(f"Now: {now}, Start: {start_dt}, End: {end_dt}")
     return start_dt <= now <= end_dt
+   
 
 def get_countdowns():
     return load_json('countdowns.json')
