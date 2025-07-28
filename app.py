@@ -88,6 +88,7 @@ def role_select():
 @app.route('/voter_register_page')
 def voter_register_page():
     countdowns = get_countdowns()
+    print("DEBUG VOTER REG PAGE:", countdowns)
     voter_start = countdowns['voter_registration']['start']
     voter_end = countdowns['voter_registration']['end']
     if not is_within_period(voter_start, voter_end):
