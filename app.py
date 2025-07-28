@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import json
 import uuid 
-import pytz
 from werkzeug.utils import secure_filename
 import os
 from flask_cors import CORS
@@ -251,6 +250,7 @@ def admin_dashboard():
     candidates = load_json('candidates.json')
     voters = load_json('voters.json')
     countdowns = load_json('countdowns.json')
+    print("DEBUG ADMIN DASH:", countdowns)
     votes = get_current_votes()
     return render_template('admin_dashboard.html', candidates=candidates, voters=voters, countdowns=countdowns, votes=votes)
 
